@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Admin Dashboard - Full System Control - Training Institute CMS">
+    <meta name="theme-color" content="#6366f1">
+    <title>Admin Dashboard - Full System Control | Training Institute CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/admin-redesign.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="navbar-content">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="logo-section">
+                    <i class="bi bi-shield-check-fill text-primary"></i>
+                    <span class="logo-text">Admin Control Panel</span>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="nav-item">
+                    <button class="theme-toggle-navbar" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                        <i class="bi bi-moon-stars"></i>
+                    </button>
+                </div>
+                <div class="nav-item">
+                    <button class="nav-icon-btn" id="notificationsBtn" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge-notification" id="notificationsBadge">0</span>
+                    </button>
+                </div>
+                <div class="nav-item">
+                    <div class="user-dropdown">
+                        <button class="user-profile-btn" id="userProfileBtn">
+                            <div class="user-avatar">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name-top" id="userNameTop">Admin</span>
+                                <span class="user-role-top">Admin / Manager</span>
+                            </div>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a class="dropdown-item" href="#" onclick="showUserProfile()">
+                                <i class="bi bi-person"></i> My Profile
+                            </a>
+                            <a class="dropdown-item" href="#" onclick="showSystemSettings()">
+                                <i class="bi bi-gear"></i> System Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar-new" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info-card">
+                    <div class="user-avatar-large">
+                        <i class="bi bi-shield-check-fill text-primary"></i>
+                    </div>
+                    <div class="user-info-text">
+                        <div class="user-name" id="userName">Admin</div>
+                        <div class="user-role">Admin / Manager</div>
+                        <div class="user-badge">
+                            <i class="bi bi-star-fill"></i> Full Access
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a class="nav-item-new active" href="#" data-section="dashboard">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-badge">Overview</span>
+                </a>
+                
+                <div class="nav-section-title">Core Management</div>
+                
+                <a class="nav-item-new" href="#" data-section="students">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <span class="nav-text">Students</span>
+                    <span class="nav-badge" id="studentsBadge">0</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="trainers">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <span class="nav-text">Trainers</span>
+                    <span class="nav-badge" id="trainersBadge">0</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="users">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-person-gear"></i>
+                    </div>
+                    <span class="nav-text">Users & Roles</span>
+                    <span class="nav-badge">Manage</span>
+                </a>
+                
+                <div class="nav-section-title">Operations</div>
+                
+                <a class="nav-item-new" href="#" data-section="attendance">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="leaves">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-calendar-x"></i>
+                    </div>
+                    <span class="nav-text">Leaves</span>
+                    <span class="nav-badge bg-warning" id="leavesBadge">0</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="hostel">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-house-door"></i>
+                    </div>
+                    <span class="nav-text">Hostel</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="canteen">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-cup-hot"></i>
+                    </div>
+                    <span class="nav-text">Canteen</span>
+                </a>
+                
+                <div class="nav-section-title">Analytics & Reports</div>
+                
+                <a class="nav-item-new" href="#" data-section="reports">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-file-earmark-text"></i>
+                    </div>
+                    <span class="nav-text">Reports</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="analytics">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <span class="nav-text">Analytics</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="audit">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-journal-text"></i>
+                    </div>
+                    <span class="nav-text">Audit Logs</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="exports">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-download"></i>
+                    </div>
+                    <span class="nav-text">Data Exports</span>
+                </a>
+                
+                <div class="nav-section-title">System</div>
+                
+                <a class="nav-item-new" href="#" data-section="connections">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-diagram-3"></i>
+                    </div>
+                    <span class="nav-text">System Connections</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content-new">
+            <!-- Dynamic Page Header -->
+            <div class="page-header-modern" id="pageHeader">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title" id="pageTitle">System Dashboard</h1>
+                        <p class="page-subtitle" id="pageSubtitle">Full system control and monitoring</p>
+                    </div>
+                    <div class="page-actions" id="pageActions">
+                        <button class="btn btn-primary" onclick="refreshAllData()">
+                            <i class="bi bi-arrow-clockwise"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section">
+                <!-- System-wide KPIs -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-primary">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalStudents">0</div>
+                            <div class="stat-label">Total Students</div>
+                            <div class="stat-change positive">
+                                <i class="bi bi-arrow-up"></i> Active
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon bg-success">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="totalTrainers">0</div>
+                            <div class="stat-label">Total Trainers</div>
+                            <div class="stat-change positive">
+                                <i class="bi bi-arrow-up"></i> Active
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon bg-info">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="attendanceRate">0%</div>
+                            <div class="stat-label">Attendance Rate</div>
+                            <div class="stat-change positive">
+                                <i class="bi bi-arrow-up"></i> Today
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon bg-warning">
+                            <i class="bi bi-house-door"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="hostelOccupancy">0</div>
+                            <div class="stat-label">Hostel Occupancy</div>
+                            <div class="stat-change">
+                                <i class="bi bi-info-circle"></i> Capacity
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon bg-danger">
+                            <i class="bi bi-clock-history"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="pendingLeaves">0</div>
+                            <div class="stat-label">Pending Leaves</div>
+                            <div class="stat-change negative">
+                                <i class="bi bi-exclamation-triangle"></i> Action Required
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple">
+                            <i class="bi bi-cup-hot"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="foodSelections">0</div>
+                            <div class="stat-label">Today's Food Selections</div>
+                            <div class="stat-change">
+                                <i class="bi bi-calendar-day"></i> Today
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-grid">
+                    <div class="quick-action-card" onclick="showSection('students'); showAddStudentModal();">
+                        <div class="action-icon bg-primary">
+                            <i class="bi bi-person-plus"></i>
+                        </div>
+                        <div class="action-text">Add Student</div>
+                    </div>
+                    <div class="quick-action-card" onclick="showSection('trainers'); showAddTrainerModal();">
+                        <div class="action-icon bg-success">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                        <div class="action-text">Add Trainer</div>
+                    </div>
+                    <div class="quick-action-card" onclick="showSection('users'); showAddUserModal();">
+                        <div class="action-icon bg-info">
+                            <i class="bi bi-person-gear"></i>
+                        </div>
+                        <div class="action-text">Create User</div>
+                    </div>
+                    <div class="quick-action-card" onclick="showSection('exports'); exportAllData();">
+                        <div class="action-icon bg-warning">
+                            <i class="bi bi-download"></i>
+                        </div>
+                        <div class="action-text">Export All Data</div>
+                    </div>
+                    <div class="quick-action-card" onclick="showSection('reports'); generateSystemReport();">
+                        <div class="action-icon bg-danger">
+                            <i class="bi bi-file-earmark-pdf"></i>
+                        </div>
+                        <div class="action-text">Generate Report</div>
+                    </div>
+                    <div class="quick-action-card" onclick="showSection('analytics'); loadAnalytics();">
+                        <div class="action-icon bg-purple">
+                            <i class="bi bi-graph-up-arrow"></i>
+                        </div>
+                        <div class="action-text">View Analytics</div>
+                    </div>
+                </div>
+
+                <!-- System Overview Cards -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-activity"></i> System Activity</h5>
+                            </div>
+                            <div class="card-body-modern" id="systemActivity">
+                                <p class="text-muted">Loading system activity...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-bell"></i> Recent Notifications</h5>
+                            </div>
+                            <div class="card-body-modern" id="recentNotifications">
+                                <p class="text-muted">No recent notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendance Summary -->
+                <div class="content-card-modern mt-4">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-calendar-check"></i> Attendance Summary</h5>
+                    </div>
+                    <div class="card-body-modern" id="attendanceSummary">
+                        <p class="text-muted">Loading attendance summary...</p>
+                    </div>
+                </div>
+                
+                <!-- Canteen Summary -->
+                <div class="content-card-modern mt-4">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-cup-hot"></i> Canteen Summary</h5>
+                    </div>
+                    <div class="card-body-modern" id="canteenSummary">
+                        <p class="text-muted">Loading canteen summary...</p>
+                    </div>
+                </div>
+                
+                <!-- Food Menu Display -->
+                <div class="content-card-modern mt-4" id="foodMenuCard">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-cup-hot-fill"></i> Today's Food Menu</h5>
+                    </div>
+                    <div class="card-body-modern" id="foodMenuDisplay">
+                        <p class="text-muted">Loading food menu...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Section -->
+            <div id="students-section" class="content-section d-none">
+                <!-- Students Dashboard -->
+                <div class="row mb-4" id="studentsDashboard">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="studentsTotalCount">0</div>
+                                <div class="stat-label">Total Students</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-house-door"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="studentsHostelCount">0</div>
+                                <div class="stat-label">Hostel Students</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-diagram-3"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="studentsBatchCount">0</div>
+                                <div class="stat-label">Active Batches</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="studentsAttendanceRate">0%</div>
+                                <div class="stat-label">Avg Attendance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-pie-chart"></i> Batch Distribution</h5>
+                            </div>
+                            <div class="card-body-modern" id="batchDistributionChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-bar-chart"></i> Hostel Status</h5>
+                            </div>
+                            <div class="card-body-modern" id="hostelStatusChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Students Table -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><i class="bi bi-table"></i> Student List</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-2" onclick="exportData('students', 'csv')">
+                                    <i class="bi bi-download"></i> Export
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="showAddStudentModal()">
+                                    <i class="bi bi-plus-circle"></i> Add Student
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="studentSearch" placeholder="Search students by name, ID, or batch...">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Mobile</th>
+                                        <th>Parent Number</th>
+                                        <th>Batch</th>
+                                        <th>Hostel</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trainers Section -->
+            <div id="trainers-section" class="content-section d-none">
+                <!-- Trainers Dashboard -->
+                <div class="row mb-4" id="trainersDashboard">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-person-badge"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="trainersTotalCount">0</div>
+                                <div class="stat-label">Total Trainers</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="trainersClassesCount">0</div>
+                                <div class="stat-label">Active Classes</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-clock-history"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="trainersPendingLeaves">0</div>
+                                <div class="stat-label">Pending Leaves</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-list-ul"></i> Trainer Activity Overview</h5>
+                            </div>
+                            <div class="card-body-modern" id="trainerActivityOverview">
+                                <p class="text-muted">Loading overview...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trainers Table -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><i class="bi bi-table"></i> Trainer List</h5>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-2" onclick="exportData('trainers', 'csv')">
+                                    <i class="bi bi-download"></i> Export
+                                </button>
+                                <button class="btn btn-sm btn-primary" onclick="showAddTrainerModal()">
+                                    <i class="bi bi-plus-circle"></i> Add Trainer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="trainerSearch" placeholder="Search trainers...">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Mobile</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="trainersTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users & Roles Section -->
+            <div id="users-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><i class="bi bi-person-gear"></i> Users & Roles Management</h5>
+                            <button class="btn btn-sm btn-primary" onclick="showAddUserModal()">
+                                <i class="bi bi-plus-circle"></i> Create User
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body-modern">
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#usersTab">Users</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rolesTab">Roles & Permissions</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="usersTab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Username</th>
+                                                <th>Name</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>Last Login</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="usersTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="rolesTab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Role</th>
+                                                <th>Description</th>
+                                                <th>Permissions</th>
+                                                <th>Users</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rolesTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div id="attendance-section" class="content-section d-none">
+                <!-- Attendance Dashboard -->
+                <div class="row mb-4" id="attendanceDashboard">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="attendanceCompleted">0</div>
+                                <div class="stat-label">Fully Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-laptop"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="attendanceOnline">0</div>
+                                <div class="stat-label">Online Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-file-earmark"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="attendanceOffline">0</div>
+                                <div class="stat-label">Offline Received</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-danger">
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="attendancePending">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-pie-chart"></i> Attendance Status</h5>
+                            </div>
+                            <div class="card-body-modern" id="attendanceStatusChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-bar-chart"></i> Batch-wise Attendance</h5>
+                            </div>
+                            <div class="card-body-modern" id="batchAttendanceChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendance Table -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-table"></i> Attendance Records</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="attendanceSearch" placeholder="Search students...">
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Student ID</th>
+                                        <th>Name</th>
+                                        <th>Batch</th>
+                                        <th>Online Class</th>
+                                        <th>Offline Records</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaves Section -->
+            <div id="leaves-section" class="content-section d-none">
+                <!-- Leaves Dashboard -->
+                <div class="row mb-4" id="leavesDashboard">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-clock-history"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="leavesPendingCount">0</div>
+                                <div class="stat-label">Pending</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="leavesApprovedCount">0</div>
+                                <div class="stat-label">Approved</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-danger">
+                                <i class="bi bi-x-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="leavesRejectedCount">0</div>
+                                <div class="stat-label">Rejected</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-percent"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="leavesApprovalRate">0%</div>
+                                <div class="stat-label">Approval Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-pie-chart"></i> Leave Status Distribution</h5>
+                            </div>
+                            <div class="card-body-modern" id="leaveStatusChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-bar-chart"></i> Leave by Type</h5>
+                            </div>
+                            <div class="card-body-modern" id="leaveTypeChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leaves Table -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><i class="bi bi-table"></i> Leave Management</h5>
+                            <button class="btn btn-sm btn-outline-primary" onclick="exportData('leaves', 'csv')">
+                                <i class="bi bi-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body-modern">
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pendingLeavesTab">
+                                    Pending <span class="badge bg-warning" id="pendingLeavesCount">0</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#approvedLeavesTab">
+                                    Approved <span class="badge bg-success" id="approvedLeavesCount">0</span>
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#rejectedLeavesTab">
+                                    Rejected <span class="badge bg-danger" id="rejectedLeavesCount">0</span>
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="pendingLeavesTab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>ID/Name</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Reason</th>
+                                                <th>Stage</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="pendingLeavesTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="approvedLeavesTab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>ID/Name</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Reason</th>
+                                                <th>Approved By</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="approvedLeavesTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="rejectedLeavesTab">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Type</th>
+                                                <th>ID/Name</th>
+                                                <th>From</th>
+                                                <th>To</th>
+                                                <th>Reason</th>
+                                                <th>Rejected By</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="rejectedLeavesTableBody"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hostel Section -->
+            <div id="hostel-section" class="content-section d-none">
+                <!-- Hostel Dashboard -->
+                <div class="row mb-4" id="hostelDashboard">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-house-door"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="hostelOccupancyCount">0</div>
+                                <div class="stat-label">Occupancy</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-sunrise"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="hostelMorningFood">0</div>
+                                <div class="stat-label">Morning Selections</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-moon"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="hostelNightFood">0</div>
+                                <div class="stat-label">Night Selections</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-bar-chart"></i> Food Selection Trends</h5>
+                            </div>
+                            <div class="card-body-modern" id="hostelFoodTrends">
+                                <p class="text-muted">Loading trends...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hostel Details -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-info-circle"></i> Hostel Details</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6>Food Selection Counts</h6>
+                                        <div id="hostelFoodCountDisplay"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canteen Section -->
+            <div id="canteen-section" class="content-section d-none">
+                <!-- Canteen Dashboard -->
+                <div class="row mb-4" id="canteenDashboard">
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="canteenStockItems">0</div>
+                                <div class="stat-label">Stock Items</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-sunrise"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="canteenMorningSelections">0</div>
+                                <div class="stat-label">Morning Selections</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-moon"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="canteenNightSelections">0</div>
+                                <div class="stat-label">Night Selections</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-people"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-value" id="canteenTotalSelections">0</div>
+                                <div class="stat-label">Total Selections</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-list-ul"></i> Stock Levels</h5>
+                            </div>
+                            <div class="card-body-modern" id="stockLevelsDisplay">
+                                <p class="text-muted">Loading stock levels...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="content-card-modern">
+                            <div class="card-header-modern">
+                                <h5><i class="bi bi-pie-chart"></i> Food Selection Distribution</h5>
+                            </div>
+                            <div class="card-body-modern" id="foodSelectionChart">
+                                <p class="text-muted">Loading chart...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Canteen Details -->
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-info-circle"></i> Canteen Details</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6>Stock Quantities</h6>
+                                        <div id="stockDisplay"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6>Food Selection Counts</h6>
+                                        <div id="foodCountDisplay"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-file-earmark-text"></i> System Reports</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-people fs-1 text-primary"></i>
+                                        <h5 class="mt-3">Student Report</h5>
+                                        <p class="text-muted">Generate comprehensive student reports</p>
+                                        <button class="btn btn-primary" onclick="generateStudentReport()">Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-calendar-check fs-1 text-success"></i>
+                                        <h5 class="mt-3">Attendance Report</h5>
+                                        <p class="text-muted">View attendance statistics and trends</p>
+                                        <button class="btn btn-success" onclick="generateAttendanceReport()">Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="bi bi-calendar-x fs-1 text-warning"></i>
+                                        <h5 class="mt-3">Leave Report</h5>
+                                        <p class="text-muted">Analyze leave patterns and approvals</p>
+                                        <button class="btn btn-warning" onclick="generateLeaveReport()">Generate</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-graph-up"></i> System Analytics</h5>
+                    </div>
+                    <div class="card-body-modern" id="analyticsContent">
+                        <p class="text-muted">Loading analytics...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Audit Logs Section -->
+            <div id="audit-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <div>
+                            <h5><i class="bi bi-journal-text"></i> Audit Logs & Activity History</h5>
+                            <p class="text-muted mb-0">Track all system activities, login history, and user actions</p>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-primary" onclick="exportAuditLogs()">
+                                <i class="bi bi-download"></i> Export Logs
+                            </button>
+                            <button class="btn btn-sm btn-secondary" onclick="clearAuditLogs()">
+                                <i class="bi bi-trash"></i> Clear Old Logs
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Filter by Action</label>
+                                <select class="form-select" id="auditActionFilter" onchange="loadAuditLogs()">
+                                    <option value="">All Actions</option>
+                                    <option value="login">Login</option>
+                                    <option value="logout">Logout</option>
+                                    <option value="leave_approval">Leave Approval</option>
+                                    <option value="leave_rejection">Leave Rejection</option>
+                                    <option value="schedule_create">Schedule Create</option>
+                                    <option value="schedule_update">Schedule Update</option>
+                                    <option value="attendance_submit">Attendance Submit</option>
+                                    <option value="user_create">User Create</option>
+                                    <option value="user_status_change">User Status Change</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Filter by User</label>
+                                <input type="text" class="form-control" id="auditUserFilter" placeholder="Username" onkeyup="loadAuditLogs()">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Filter by Role</label>
+                                <select class="form-select" id="auditRoleFilter" onchange="loadAuditLogs()">
+                                    <option value="">All Roles</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="trainer">Trainer</option>
+                                    <option value="qis">QIS</option>
+                                    <option value="mis">MIS</option>
+                                    <option value="hostel">Hostel Incharge</option>
+                                    <option value="canteen">Canteen Incharge</option>
+                                    <option value="student">Student</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Date Range</label>
+                                <input type="date" class="form-control" id="auditDateFilter" onchange="loadAuditLogs()">
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditLogsTableBody">
+                                    <tr><td colspan="5" class="text-center text-muted">Loading audit logs...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exports Section -->
+            <div id="exports-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-download"></i> Data Exports</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6><i class="bi bi-people"></i> Export Students</h6>
+                                        <p class="text-muted">Export all student data to CSV</p>
+                                        <button class="btn btn-primary w-100" onclick="exportData('students', 'csv')">
+                                            <i class="bi bi-download"></i> Export CSV
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6><i class="bi bi-person-badge"></i> Export Trainers</h6>
+                                        <p class="text-muted">Export all trainer data to CSV</p>
+                                        <button class="btn btn-success w-100" onclick="exportData('trainers', 'csv')">
+                                            <i class="bi bi-download"></i> Export CSV
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6><i class="bi bi-calendar-check"></i> Export Attendance</h6>
+                                        <p class="text-muted">Export attendance records</p>
+                                        <button class="btn btn-info w-100" onclick="exportData('attendance', 'csv')">
+                                            <i class="bi bi-download"></i> Export CSV
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6><i class="bi bi-calendar-x"></i> Export Leaves</h6>
+                                        <p class="text-muted">Export all leave records</p>
+                                        <button class="btn btn-warning w-100" onclick="exportData('leaves', 'csv')">
+                                            <i class="bi bi-download"></i> Export CSV
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn btn-danger w-100" onclick="exportAllData()">
+                                <i class="bi bi-download"></i> Export All Data (Complete Backup)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Connections Section -->
+            <div id="connections-section" class="content-section d-none">
+                <div class="content-card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="bi bi-diagram-3"></i> System Connections & Architecture</h5>
+                    </div>
+                    <div class="card-body-modern">
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> <strong>How Admin Connects to All Pages:</strong> All dashboards share the same data storage (localStorage) and authentication system.
+                        </div>
+                        
+                        <!-- Connection Diagram -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h6 class="mb-3"><i class="bi bi-share"></i> Data Flow Architecture</h6>
+                                <div class="system-connections-diagram">
+                                    <div class="connection-node admin-node">
+                                        <div class="node-header bg-primary text-white">
+                                            <i class="bi bi-shield-check"></i> Admin Dashboard
+                                        </div>
+                                        <div class="node-body">
+                                            <p><strong>Full System Control</strong></p>
+                                            <ul class="small">
+                                                <li>Reads/Writes all data</li>
+                                                <li>Manages users & roles</li>
+                                                <li>Views all dashboards data</li>
+                                                <li>Can override any action</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="connection-arrow">
+                                        <i class="bi bi-arrow-down"></i>
+                                    </div>
+                                    
+                                    <div class="connection-node storage-node">
+                                        <div class="node-header bg-success text-white">
+                                            <i class="bi bi-database"></i> Shared Data Storage (localStorage)
+                                        </div>
+                                        <div class="node-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <strong>Data Files:</strong>
+                                                    <ul class="small">
+                                                        <li>students</li>
+                                                        <li>trainers</li>
+                                                        <li>studentLeaves</li>
+                                                        <li>trainerLeaves</li>
+                                                        <li>foodMenu</li>
+                                                        <li>foodSelections</li>
+                                                        <li>canteenStock</li>
+                                                        <li>allClasses</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <strong>Shared Functions:</strong>
+                                                    <ul class="small">
+                                                        <li>getStudents()</li>
+                                                        <li>getTrainers()</li>
+                                                        <li>getStudentLeaves()</li>
+                                                        <li>getTrainerLeaves()</li>
+                                                        <li>getFoodMenu()</li>
+                                                        <li>saveStudent()</li>
+                                                        <li>saveStudentLeave()</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="connection-arrow">
+                                        <i class="bi bi-arrow-down"></i>
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-md-3">
+                                            <div class="connection-node user-node">
+                                                <div class="node-header bg-info text-white">
+                                                    <i class="bi bi-people"></i> Student Dashboard
+                                                </div>
+                                                <div class="node-body">
+                                                    <p class="small"><strong>Reads:</strong> Own data</p>
+                                                    <p class="small"><strong>Writes:</strong> Food selections, Leave applications</p>
+                                                    <p class="small"><strong>File:</strong> student-dashboard.html</p>
+                                                    <p class="small"><strong>Script:</strong> js/student.js</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="connection-node user-node">
+                                                <div class="node-header bg-warning text-white">
+                                                    <i class="bi bi-person-badge"></i> Trainer Dashboard
+                                                </div>
+                                                <div class="node-body">
+                                                    <p class="small"><strong>Reads:</strong> Students, Classes</p>
+                                                    <p class="small"><strong>Writes:</strong> Classes, Leave applications</p>
+                                                    <p class="small"><strong>File:</strong> trainer-dashboard.html</p>
+                                                    <p class="small"><strong>Script:</strong> js/trainer.js</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="connection-node user-node">
+                                                <div class="node-header bg-danger text-white">
+                                                    <i class="bi bi-clipboard-data"></i> MIS Dashboard
+                                                </div>
+                                                <div class="node-body">
+                                                    <p class="small"><strong>Reads:</strong> All student data</p>
+                                                    <p class="small"><strong>Writes:</strong> Attendance, Leaves (Level 2)</p>
+                                                    <p class="small"><strong>File:</strong> mis-dashboard.html</p>
+                                                    <p class="small"><strong>Script:</strong> js/mis.js</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="connection-node user-node">
+                                                <div class="node-header bg-purple text-white">
+                                                    <i class="bi bi-shield-check"></i> Admin Dashboard
+                                                </div>
+                                                <div class="node-body">
+                                                    <p class="small"><strong>Reads:</strong> Everything</p>
+                                                    <p class="small"><strong>Writes:</strong> Everything</p>
+                                                    <p class="small"><strong>File:</strong> admin-dashboard.html</p>
+                                                    <p class="small"><strong>Script:</strong> js/admin.js</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shared Resources -->
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0"><i class="bi bi-link-45deg"></i> Shared JavaScript Files</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <i class="bi bi-file-code text-primary"></i> <strong>js/data.js</strong>
+                                                <br><small class="text-muted">Central data management - All dashboards use this</small>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="bi bi-file-code text-success"></i> <strong>js/auth.js</strong>
+                                                <br><small class="text-muted">Authentication system - Login/logout for all roles</small>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="bi bi-file-code text-info"></i> <strong>js/utils.js</strong>
+                                                <br><small class="text-muted">Utility functions - Toast, ConfirmDialog, etc.</small>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <i class="bi bi-file-code text-warning"></i> <strong>js/dashboard-enhancements.js</strong>
+                                                <br><small class="text-muted">Common dashboard features - Dark mode, search, etc.</small>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h6 class="mb-0"><i class="bi bi-database"></i> Shared Data Storage</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Storage Type:</strong> Browser localStorage</p>
+                                        <p><strong>Scope:</strong> All pages share the same storage</p>
+                                        <p><strong>Connection:</strong> When admin updates data, all other dashboards see the changes immediately</p>
+                                        
+                                        <div class="mt-3">
+                                            <h6>Data Keys Used:</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul class="small">
+                                                        <li>students</li>
+                                                        <li>trainers</li>
+                                                        <li>studentLeaves</li>
+                                                        <li>trainerLeaves</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul class="small">
+                                                        <li>foodMenu</li>
+                                                        <li>foodSelections</li>
+                                                        <li>canteenStock</li>
+                                                        <li>allClasses</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- How Admin Controls Other Pages -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header bg-danger text-white">
+                                        <h6 class="mb-0"><i class="bi bi-shield-check"></i> Admin Control Over Other Dashboards</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h6><i class="bi bi-people text-primary"></i> Student Dashboard</h6>
+                                                <ul class="small">
+                                                    <li>Admin can view all student data</li>
+                                                    <li>Admin can add/edit/delete students</li>
+                                                    <li>Admin sees all food selections students make</li>
+                                                    <li>Admin can approve/reject student leaves</li>
+                                                    <li>Admin can update student attendance</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6><i class="bi bi-person-badge text-success"></i> Trainer Dashboard</h6>
+                                                <ul class="small">
+                                                    <li>Admin can view all trainer data</li>
+                                                    <li>Admin can add/edit/delete trainers</li>
+                                                    <li>Admin sees all classes trainers create</li>
+                                                    <li>Admin can approve/reject trainer leaves</li>
+                                                    <li>Admin manages trainer permissions</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6><i class="bi bi-clipboard-data text-warning"></i> MIS Dashboard</h6>
+                                                <ul class="small">
+                                                    <li>Admin can view all MIS actions</li>
+                                                    <li>Admin can override MIS approvals</li>
+                                                    <li>Admin sees all Level 2 approved leaves</li>
+                                                    <li>Admin has final approval authority</li>
+                                                    <li>Admin can manage MIS users</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Real-time Connection Status -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header bg-info text-white">
+                                        <h6 class="mb-0"><i class="bi bi-activity"></i> Real-time Connection Status</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3 bg-light rounded">
+                                                    <i class="bi bi-database fs-1 text-success"></i>
+                                                    <h6 class="mt-2">Data Storage</h6>
+                                                    <span class="badge bg-success">Connected</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3 bg-light rounded">
+                                                    <i class="bi bi-people fs-1 text-primary"></i>
+                                                    <h6 class="mt-2">Student Data</h6>
+                                                    <span class="badge bg-primary" id="studentDataStatus">Active</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3 bg-light rounded">
+                                                    <i class="bi bi-person-badge fs-1 text-success"></i>
+                                                    <h6 class="mt-2">Trainer Data</h6>
+                                                    <span class="badge bg-success" id="trainerDataStatus">Active</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="text-center p-3 bg-light rounded">
+                                                    <i class="bi bi-shield-check fs-1 text-danger"></i>
+                                                    <h6 class="mt-2">Admin Access</h6>
+                                                    <span class="badge bg-danger">Full Control</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p class="text-muted small">
+                                                <i class="bi bi-info-circle"></i> <strong>Note:</strong> All dashboards read from and write to the same localStorage. 
+                                                When you make changes in the admin panel, those changes are immediately available to all other dashboards. 
+                                                This creates a real-time connection between all pages.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals will be added here -->
+    <!-- Add Student Modal -->
+    <div class="modal fade" id="addStudentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add/Edit Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addStudentForm">
+                        <input type="hidden" id="studentId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Student Name *</label>
+                                <input type="text" class="form-control" id="studentName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Student ID *</label>
+                                <input type="text" class="form-control" id="studentIdInput" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Mobile Number *</label>
+                                <input type="tel" class="form-control" id="studentMobile" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Parent Number *</label>
+                                <input type="tel" class="form-control" id="parentNumber" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Batch Number *</label>
+                                <input type="text" class="form-control" id="batchNumber" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Current Batch *</label>
+                                <input type="text" class="form-control" id="currentBatch" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Hostel Status *</label>
+                                <select class="form-select" id="hostelStatus" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" placeholder="e.g., Delhi, Mumbai">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudent()">Save Student</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Trainer Modal -->
+    <div class="modal fade" id="addTrainerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add/Edit Trainer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addTrainerForm">
+                        <input type="hidden" id="trainerId">
+                        <div class="mb-3">
+                            <label class="form-label">Trainer Name *</label>
+                            <input type="text" class="form-control" id="trainerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Username *</label>
+                            <input type="text" class="form-control" id="trainerUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="trainerEmail">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" class="form-control" id="trainerMobile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveTrainer()">Save Trainer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create/Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <input type="hidden" id="userId">
+                        <div class="mb-3">
+                            <label class="form-label">Username *</label>
+                            <input type="text" class="form-control" id="userUsername" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name *</label>
+                            <input type="text" class="form-control" id="userName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control" id="userPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Role *</label>
+                            <select class="form-select" id="userRole" required>
+                                <option value="">Select Role</option>
+                                <option value="admin">Admin / Manager</option>
+                                <option value="trainer">Trainer</option>
+                                <option value="mis">MIS</option>
+                                <option value="student">Student</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUser()">Save User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/dashboard-enhancements.js"></script>
+    <script src="js/admin-redesign.js"></script>
+    <script src="js/admin-fixes.js"></script>
+</body>
+</html>
+

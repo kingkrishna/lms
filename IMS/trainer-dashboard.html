@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Trainer Dashboard - Training Institute CMS">
+    <meta name="theme-color" content="#6366f1">
+    <title>Trainer Dashboard - Training Institute CMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/admin-redesign.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-navbar">
+        <div class="navbar-content">
+            <div class="navbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="logo-section">
+                    <i class="bi bi-mortarboard-fill"></i>
+                    <span class="logo-text">Training Institute CMS</span>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <div class="nav-item">
+                    <button class="nav-icon-btn" id="notificationsBtn" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="badge-notification" id="pendingLeavesBadgeTop">0</span>
+                    </button>
+                </div>
+                <div class="nav-item">
+                    <div class="user-dropdown">
+                        <button class="user-profile-btn" id="userProfileBtn">
+                            <div class="user-avatar">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <span class="user-name-top" id="userNameTop">Trainer</span>
+                                <span class="user-role-top">Trainer</span>
+                            </div>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="bi bi-person"></i> Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="bi bi-gear"></i> Settings
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" onclick="logout()">
+                                <i class="bi bi-box-arrow-right"></i> Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar-new" id="sidebar">
+            <div class="sidebar-header">
+                <div class="user-info-card">
+                    <div class="user-avatar-large">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="user-info-text">
+                        <div class="user-name" id="userName">Trainer</div>
+                        <div class="user-role">Trainer</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a class="nav-item-new active" href="#" data-section="dashboard">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-speedometer2"></i>
+                    </div>
+                    <span class="nav-text">Dashboard</span>
+                    <span class="nav-badge">Home</span>
+                </a>
+                
+                <div class="nav-section-title">Management</div>
+                
+                <a class="nav-item-new" href="#" data-section="attendance">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <span class="nav-text">Attendance</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="classes">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-calendar-event"></i>
+                    </div>
+                    <span class="nav-text">View Classes</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="students">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <span class="nav-text">Students</span>
+                </a>
+                
+                <a class="nav-item-new" href="#" data-section="leaves">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-calendar-x"></i>
+                    </div>
+                    <span class="nav-text">Leave Approval</span>
+                    <span class="nav-badge badge-warning" id="pendingLeavesBadge">0</span>
+                </a>
+                
+                <div class="nav-section-title">Personal</div>
+                
+                <a class="nav-item-new" href="#" data-section="food">
+                    <div class="nav-icon-wrapper">
+                        <i class="bi bi-cup-hot"></i>
+                    </div>
+                    <span class="nav-text">Food Selection</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="logout-btn-new" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content-new">
+            <!-- Page Header -->
+            <div class="page-header" id="pageHeader">
+                <div class="page-header-content">
+                    <div>
+                        <h1 class="page-title" id="pageTitle">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </h1>
+                        <p class="page-subtitle" id="pageSubtitle">Welcome back! Here's your overview today.</p>
+                    </div>
+                    <div class="page-actions" id="pageActions"></div>
+                </div>
+            </div>
+            
+            <!-- Content Sections -->
+            <div class="content-wrapper">
+                <!-- Dashboard Section -->
+                <div id="dashboard-section" class="content-section">
+                    <!-- Stats Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card stat-card-primary">
+                            <div class="stat-card-icon">
+                                <i class="bi bi-people-fill"></i>
+                            </div>
+                            <div class="stat-card-content">
+                                <div class="stat-card-value" id="myStudents">0</div>
+                                <div class="stat-card-label">My Students</div>
+                                <div class="stat-card-change">
+                                    <i class="bi bi-people"></i> <span>Assigned</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card stat-card-warning">
+                            <div class="stat-card-icon">
+                                <i class="bi bi-calendar-x-fill"></i>
+                            </div>
+                            <div class="stat-card-content">
+                                <div class="stat-card-value" id="pendingLeaves">0</div>
+                                <div class="stat-card-label">Pending Leaves</div>
+                                <div class="stat-card-change">
+                                    <i class="bi bi-clock-history"></i> <span>Awaiting Review</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card stat-card-success">
+                            <div class="stat-card-icon">
+                                <i class="bi bi-cup-hot-fill"></i>
+                            </div>
+                            <div class="stat-card-content">
+                                <div class="stat-card-value" id="foodSelections">0</div>
+                                <div class="stat-card-label">Food Selections</div>
+                                <div class="stat-card-change">
+                                    <i class="bi bi-check-circle"></i> <span>Today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div class="quick-actions-section">
+                        <h3 class="section-title">Quick Actions</h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-card" onclick="showSection('attendance')">
+                                <div class="quick-action-icon">
+                                    <i class="bi bi-clipboard-check"></i>
+                                </div>
+                                <div class="quick-action-text">
+                                    <div class="quick-action-title">Mark Attendance</div>
+                                    <div class="quick-action-desc">Update session records</div>
+                                </div>
+                                <i class="bi bi-arrow-right quick-action-arrow"></i>
+                            </button>
+                            
+                            <button class="quick-action-card" onclick="showSection('leaves')">
+                                <div class="quick-action-icon">
+                                    <i class="bi bi-file-earmark-check"></i>
+                                </div>
+                                <div class="quick-action-text">
+                                    <div class="quick-action-title">Review Leaves</div>
+                                    <div class="quick-action-desc">Pending approvals</div>
+                                </div>
+                                <i class="bi bi-arrow-right quick-action-arrow"></i>
+                            </button>
+                            
+                            <button class="quick-action-card" onclick="showSection('students')">
+                                <div class="quick-action-icon">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="quick-action-text">
+                                    <div class="quick-action-title">View Students</div>
+                                    <div class="quick-action-desc">Student monitoring</div>
+                                </div>
+                                <i class="bi bi-arrow-right quick-action-arrow"></i>
+                            </button>
+                            
+                            <button class="quick-action-card" onclick="showSection('food')">
+                                <div class="quick-action-icon">
+                                    <i class="bi bi-cup-hot"></i>
+                                </div>
+                                <div class="quick-action-text">
+                                    <div class="quick-action-title">Food Selection</div>
+                                    <div class="quick-action-desc">Select meals</div>
+                                </div>
+                                <i class="bi bi-arrow-right quick-action-arrow"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Food Menu Display -->
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-cup-hot-fill"></i> Today's Food Menu
+                                </h5>
+                                <p class="card-subtitle">View today's menu and make your selection</p>
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <div id="foodMenuDisplay"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Attendance Section -->
+                <div id="attendance-section" class="content-section d-none">
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-calendar-check-fill"></i> Attendance Management
+                                </h5>
+                                <p class="card-subtitle">Mark session completion status for your classes</p>
+                            </div>
+                            <div class="card-actions">
+                                <input type="date" class="form-control-modern" id="attendanceDate" style="max-width: 200px;" onchange="loadAttendance()">
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="info-card">
+                                        <h6 class="info-card-title">
+                                            <i class="bi bi-clipboard-check"></i> Session Attendance
+                                        </h6>
+                                        <p class="info-card-subtitle">Mark session completion status. This confirms class session completion, not individual student presence.</p>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Online Attendance Done</label>
+                                            <select class="form-select form-select-lg" id="onlineAttendanceDone" onchange="saveAttendance()">
+                                                <option value="">Select Status</option>
+                                                <option value="yes">Yes - Completed</option>
+                                                <option value="no">No - Not Completed</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Offline Attendance Done</label>
+                                            <select class="form-select form-select-lg" id="offlineAttendanceDone" onchange="saveAttendance()">
+                                                <option value="">Select Status</option>
+                                                <option value="yes">Yes - Completed</option>
+                                                <option value="no">No - Not Completed</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div id="attendanceStatusDisplay" class="mt-4"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Classes Section -->
+                <div id="classes-section" class="content-section d-none">
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-calendar-event-fill"></i> Class Schedule Management
+                                </h5>
+                                <p class="card-subtitle">Create and manage your class schedules for assigned batches</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn-modern btn-modern-primary" onclick="showAddClassModal()">
+                                    <i class="bi bi-plus-circle"></i> Create Schedule
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <label class="form-label">Filter by Date</label>
+                                    <input type="date" class="form-control-modern" id="filterDate" onchange="filterClasses()">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Filter by Batch</label>
+                                    <input type="text" class="form-control-modern" id="filterBatch" placeholder="Batch name" onchange="filterClasses()">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">Filter by Time</label>
+                                    <input type="text" class="form-control-modern" id="filterTime" placeholder="e.g., 9:00 AM" onchange="filterClasses()">
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button class="btn-modern btn-modern-secondary w-100" onclick="clearFilters()">Clear Filters</button>
+                                </div>
+                            </div>
+                            <div class="table-wrapper-modern">
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th>Class Name</th>
+                                            <th>Schedule</th>
+                                            <th>Batch</th>
+                                            <th>Trainer</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="classesTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Students Section -->
+                <div id="students-section" class="content-section d-none">
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-people-fill"></i> Student Monitoring (View Only)
+                                </h5>
+                                <p class="card-subtitle">View and monitor your assigned students</p>
+                            </div>
+                            <div class="card-actions">
+                                <select class="form-control-modern" id="filterBatchStudents" style="max-width: 200px;" onchange="loadStudents()">
+                                    <option value="">All Batches</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <div class="table-wrapper-modern">
+                                <table class="table-modern">
+                                    <thead>
+                                        <tr>
+                                            <th>Student ID</th>
+                                            <th>Name</th>
+                                            <th>Mobile</th>
+                                            <th>Parent Number</th>
+                                            <th>Batch</th>
+                                            <th>Batch ID</th>
+                                            <th>Hostel Status</th>
+                                            <th>Location</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="studentsTableBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leave Approval Section -->
+                <div id="leaves-section" class="content-section d-none">
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-calendar-x-fill"></i> Student Leave Approval (Level 1)
+                                </h5>
+                                <p class="card-subtitle">Review and approve student leave requests. Approved leaves will be forwarded to MIS for Level 2 approval.</p>
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <!-- Bootstrap Tabs -->
+                            <ul class="nav nav-tabs-modern mb-4" id="leaveTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link-modern active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending-leaves" type="button" role="tab">
+                                        <i class="bi bi-clock-history"></i> Pending Leaves
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link-modern" id="approved-tab" data-bs-toggle="tab" data-bs-target="#approved-leaves" type="button" role="tab">
+                                        <i class="bi bi-check-circle-fill"></i> Approved Leaves
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link-modern" id="rejected-tab" data-bs-toggle="tab" data-bs-target="#rejected-leaves" type="button" role="tab">
+                                        <i class="bi bi-x-circle-fill"></i> Rejected Leaves
+                                    </button>
+                                </li>
+                            </ul>
+                            
+                            <!-- Tab Content -->
+                            <div class="tab-content" id="leaveTabsContent">
+                                <div class="tab-pane fade show active pending-leaves-section" id="pending-leaves" role="tabpanel">
+                                    <div class="accordion" id="pendingLeavesAccordion"></div>
+                                </div>
+                                <div class="tab-pane fade" id="approved-leaves" role="tabpanel">
+                                    <div class="accordion" id="approvedLeavesAccordion"></div>
+                                </div>
+                                <div class="tab-pane fade" id="rejected-leaves" role="tabpanel">
+                                    <div class="accordion" id="rejectedLeavesAccordion"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Food Selection Section -->
+                <div id="food-section" class="content-section d-none">
+                    <div class="content-card-modern">
+                        <div class="card-header-modern">
+                            <div>
+                                <h5 class="card-title-modern">
+                                    <i class="bi bi-cup-hot-fill"></i> Food Selection
+                                </h5>
+                                <p class="card-subtitle">Select your meals for the day</p>
+                            </div>
+                            <div class="card-actions">
+                                <input type="date" class="form-control-modern" id="foodSelectionDate" style="max-width: 200px;" onchange="loadFoodSelection()">
+                            </div>
+                        </div>
+                        <div class="card-body-modern">
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6 class="info-card-title">
+                                            <i class="bi bi-sunrise"></i> Morning Menu
+                                        </h6>
+                                        <div id="morningMenuItems"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="info-card">
+                                        <h6 class="info-card-title">
+                                            <i class="bi bi-moon"></i> Night Menu
+                                        </h6>
+                                        <div id="nightMenuItems"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="info-card">
+                                        <h6 class="info-card-title">
+                                            <i class="bi bi-check-circle"></i> My Food Selection
+                                        </h6>
+                                        <p class="info-card-subtitle">Your selection will be included in the total food count for canteen and hostel dashboards.</p>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Morning (Will Eat / Will Not Eat)</label>
+                                            <select class="form-select form-select-lg" id="trainerMorningSelection" onchange="saveTrainerFoodSelection()">
+                                                <option value="">Select</option>
+                                                <option value="eat">Will Eat</option>
+                                                <option value="not eat">Will Not Eat</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <label class="form-label fw-bold">Night (Will Eat / Will Not Eat)</label>
+                                            <select class="form-select form-select-lg" id="trainerNightSelection" onchange="saveTrainerFoodSelection()">
+                                                <option value="">Select</option>
+                                                <option value="eat">Will Eat</option>
+                                                <option value="not eat">Will Not Eat</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-info-circle"></i> <small>Your selection will be included in the total food count for canteen and hostel dashboards.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Add/Edit Class Schedule Modal -->
+    <div class="modal fade" id="addClassModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create/Edit Class Schedule</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addClassForm">
+                        <input type="hidden" id="classId">
+                        <div class="mb-3">
+                            <label class="form-label">Class Name / Topic *</label>
+                            <input type="text" class="form-control" id="className" required placeholder="e.g., JavaScript Fundamentals">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Date *</label>
+                                <input type="date" class="form-control" id="classDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Time *</label>
+                                <input type="time" class="form-control" id="classTime" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Batch *</label>
+                            <select class="form-select" id="classBatch" required>
+                                <option value="">Select Batch</option>
+                            </select>
+                            <small class="form-text text-muted">Only batches assigned to you are available</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" id="classStatus">
+                                <option value="scheduled">Scheduled</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> <small>Completed schedules will be locked and cannot be edited.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveClassSchedule()">Save Schedule</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Student Details Modal -->
+    <div class="modal fade" id="viewStudentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Student Details (View Only)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="studentDetailsDisplay"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/accordion-helper.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/trainer.js"></script>
+    <script src="js/dashboard-enhancements.js"></script>
+    <script src="js/trainer-redesign.js"></script>
+</body>
+</html>
